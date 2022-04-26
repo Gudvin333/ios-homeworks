@@ -8,6 +8,7 @@
 import UIKit
 
 class ProfileHeaderView: UIView {
+    
     let profileImage: UIImageView = {
         let profileImage = UIImageView(frame: CGRect(x: 16, y: 16, width: 100, height: 100))
         profileImage.image = UIImage(named: "bilbo")
@@ -50,5 +51,17 @@ class ProfileHeaderView: UIView {
     @objc func buttonPressed() {
         print(profileStatus.text ?? "Статус пуст")
     }
-
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.addSubview(profileImage)
+        self.addSubview(profileName)
+        self.addSubview(profileStatus)
+        self.addSubview(profileButton)
+        self.backgroundColor = .lightGray
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
