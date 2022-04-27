@@ -9,34 +9,37 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    let profileImage: UIImageView = {
-        let profileImage = UIImageView(frame: CGRect(x: 16, y: 16, width: 100, height: 100))
+    fileprivate let profileImage: UIImageView = {
+        let profileImage = UIImageView()
         profileImage.image = UIImage(named: "bilbo")
         profileImage.contentMode = .scaleAspectFill
+        profileImage.layer.cornerRadius = 50
         profileImage.clipsToBounds = true
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
         profileImage.layer.borderWidth = 3
         profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
         return profileImage
     }()
-    let profileName: UILabel = {
-        let profileName = UILabel(frame: CGRect(x: 125, y: 27, width: 200, height: 23))
+    fileprivate let profileName: UILabel = {
+        let profileName = UILabel()
         profileName.text = "Бильбо Бэгинс"
         profileName.backgroundColor = .lightGray
         profileName.font = UIFont.boldSystemFont(ofSize: 18)
         profileName.textColor = .black
+        profileName.translatesAutoresizingMaskIntoConstraints = false
         return profileName
     }()
-    let profileStatus: UILabel = {
+    fileprivate let profileStatus: UILabel = {
         let profileStatus = UILabel(frame: CGRect(x: 125, y: 68, width: 300, height: 30))
         profileStatus.text = "Отправился в путешествие"
         profileStatus.backgroundColor = .lightGray
         profileStatus.font = UIFont.systemFont(ofSize: 14)
         profileStatus.textColor = .gray
+        profileStatus.translatesAutoresizingMaskIntoConstraints = false
         return profileStatus
     }()
-    lazy var profileButton: UIButton = {
-        let profileButton = UIButton(frame: CGRect(x: 16, y: 132, width: UIScreen.main.bounds.width - 32, height: 50))
+    fileprivate lazy var profileButton: UIButton = {
+        let profileButton = UIButton()
         profileButton.backgroundColor = .systemBlue
         profileButton.layer.cornerRadius = 4
         profileButton.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -45,6 +48,7 @@ class ProfileHeaderView: UIView {
         profileButton.layer.shadowOpacity = 0.7
         profileButton.setTitle("Показать статус", for: .normal)
         profileButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        profileButton.translatesAutoresizingMaskIntoConstraints = false
         return profileButton
     }()
     
@@ -52,13 +56,37 @@ class ProfileHeaderView: UIView {
         print(profileStatus.text ?? "Статус пуст")
     }
     
+    fileprivate func layout() {
+        [profileImage, profileName, profileStatus, profileButton].forEach { self.addSubview($0) }
+        NSLayoutConstraint.activate([
+            profileImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+            profileImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            profileImage.widthAnchor.constraint(equalToConstant: 100),
+            profileImage.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        NSLayoutConstraint.activate([
+            profileName.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            profileName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
+            profileName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        ])
+        NSLayoutConstraint.activate([
+            profileStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
+            profileStatus.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        ])
+        NSLayoutConstraint.activate([
+            profileButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 16),
+            profileButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            profileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            profileButton.topAnchor.constraint(equalTo: profileStatus.bottomAnchor, constant: 34),
+            profileButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(profileImage)
-        self.addSubview(profileName)
-        self.addSubview(profileStatus)
-        self.addSubview(profileButton)
         self.backgroundColor = .lightGray
+        self.translatesAutoresizingMaskIntoConstraints = false
+        layout()
     }
     
     required init?(coder: NSCoder) {

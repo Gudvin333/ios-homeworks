@@ -14,11 +14,17 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(profileHeaderView)
+        layout()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        profileHeaderView.frame = view.safeAreaLayoutGuide.layoutFrame
+    fileprivate func layout() {
+        [profileHeaderView].forEach { view.addSubview($0) }
+        NSLayoutConstraint.activate([
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
+            profileHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
+        
     }
 }

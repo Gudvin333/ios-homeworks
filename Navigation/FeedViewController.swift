@@ -9,25 +9,87 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var post: Post?
+    fileprivate struct Post {
+        var title: String
+    }
+    
+    fileprivate var newsPost: Post = {
+        let newsPost = Post(title: "Новости мира")
+        return newsPost
+    }()
+    
+    fileprivate var artPost: Post = {
+        let newsPost = Post(title: "Новости искусства")
+        return newsPost
+    }()
+    
+    fileprivate var feedStackView: UIStackView = {
+        let feedStackView = UIStackView()
+        feedStackView.backgroundColor = .lightGray
+        feedStackView.axis = .vertical
+        feedStackView.distribution = .fillEqually
+        feedStackView.spacing = 10
+        feedStackView.translatesAutoresizingMaskIntoConstraints = false
+        return feedStackView
+    }()
+    
+    fileprivate lazy var firstFeedButton: UIButton = {
+        let firstFeedButton = UIButton()
+        firstFeedButton.backgroundColor = .systemBlue
+        firstFeedButton.layer.cornerRadius = 4
+        firstFeedButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        firstFeedButton.layer.shadowRadius = 4
+        firstFeedButton.layer.shadowColor = UIColor.black.cgColor
+        firstFeedButton.layer.shadowOpacity = 0.7
+        firstFeedButton.setTitle(newsPost.title, for: .normal)
+        firstFeedButton.addTarget(self, action: #selector(newsTapAction), for: .touchUpInside)
+        firstFeedButton.translatesAutoresizingMaskIntoConstraints = false
+        return firstFeedButton
+    }()
+    
+    fileprivate lazy var secondFeedButton: UIButton = {
+        let secondFeedButton = UIButton()
+        secondFeedButton.backgroundColor = .systemBlue
+        secondFeedButton.layer.cornerRadius = 4
+        secondFeedButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        secondFeedButton.layer.shadowRadius = 4
+        secondFeedButton.layer.shadowColor = UIColor.black.cgColor
+        secondFeedButton.layer.shadowOpacity = 0.7
+        secondFeedButton.setTitle(artPost.title, for: .normal)
+        secondFeedButton.addTarget(self, action: #selector(artTapAction), for: .touchUpInside)
+        secondFeedButton.translatesAutoresizingMaskIntoConstraints = false
+        return secondFeedButton
+    }()
+    
+    @objc private func newsTapAction() {
+        let postVC = PostViewController()
+        postVC.title = newsPost.title
+        navigationController?.pushViewController(postVC, animated: true)
+    }
+    
+    @objc private func artTapAction() {
+        let postVC = PostViewController()
+        postVC.title = artPost.title
+        navigationController?.pushViewController(postVC, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
-        button()
-    }
-    private func button() {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        button.center = view.center
-        button.setTitle("Перейти", for: .normal)
-        button.backgroundColor = .gray
-        button.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
-        view.addSubview(button)
+        view.backgroundColor = .white
+        layout()
     }
     
-    @objc private func tapAction() {
-        let postVC = PostViewController()
-        postVC.title = post?.title
-        navigationController?.pushViewController(postVC, animated: true)
+    fileprivate func layout() {
+        view.addSubview(feedStackView)
+        
+        [firstFeedButton, secondFeedButton].forEach { feedStackView.addArrangedSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            feedStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            feedStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            feedStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            feedStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            feedStackView.heightAnchor.constraint(equalToConstant: 300)
+        ])
     }
 }

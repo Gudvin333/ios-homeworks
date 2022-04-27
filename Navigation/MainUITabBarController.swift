@@ -7,10 +7,6 @@
 
 import UIKit
 
-struct Post {
-    var title: String
-}
-
 class MainUITabBarController: UITabBarController {
     
     let feedVC = FeedViewController()
@@ -24,6 +20,8 @@ class MainUITabBarController: UITabBarController {
     private func setupControllers() {
         let feedNavigationVc = UINavigationController(rootViewController: feedVC)
         tabBar.backgroundColor = .white
+        tabBar.layer.borderWidth = 0.5
+        tabBar.layer.borderColor = UIColor.lightGray.cgColor
         feedVC.tabBarItem.title = "Лента"
         feedVC.tabBarItem.image = UIImage(systemName: "book")
         feedVC.navigationItem.title = "Лента"
