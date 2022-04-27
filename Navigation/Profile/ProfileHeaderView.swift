@@ -62,18 +62,12 @@ class ProfileHeaderView: UIView {
             profileImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             profileImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             profileImage.widthAnchor.constraint(equalToConstant: 100),
-            profileImage.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        NSLayoutConstraint.activate([
+            profileImage.heightAnchor.constraint(equalToConstant: 100),
             profileName.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
             profileName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
-            profileName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
-        ])
-        NSLayoutConstraint.activate([
+            profileName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             profileStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
-            profileStatus.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
-        ])
-        NSLayoutConstraint.activate([
+            profileStatus.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             profileButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 16),
             profileButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             profileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
