@@ -16,6 +16,7 @@
 		9862C8F12814DB92009E08FE /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9862C8F02814DB92009E08FE /* InfoViewController.swift */; };
 		9862C8F32814DBAC009E08FE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9862C8F22814DBAC009E08FE /* FeedViewController.swift */; };
 		9862C8F52814DBC9009E08FE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9862C8F42814DBC9009E08FE /* ProfileViewController.swift */; };
+		9862C8F82814DCE6009E08FE /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9862C8F72814DCE6009E08FE /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		9862C8F02814DB92009E08FE /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		9862C8F22814DBAC009E08FE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		9862C8F42814DBC9009E08FE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		9862C8F72814DCE6009E08FE /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +66,7 @@
 			children = (
 				9862C8D82814D89C009E08FE /* AppDelegate.swift */,
 				9862C8DA2814D89C009E08FE /* SceneDelegate.swift */,
-				9862C8F42814DBC9009E08FE /* ProfileViewController.swift */,
+				9862C8F62814DCAD009E08FE /* Profile */,
 				9862C8F22814DBAC009E08FE /* FeedViewController.swift */,
 				9862C8F02814DB92009E08FE /* InfoViewController.swift */,
 				9862C8EE2814DB73009E08FE /* PostViewController.swift */,
@@ -74,6 +76,15 @@
 				9862C8E62814D89D009E08FE /* Info.plist */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		9862C8F62814DCAD009E08FE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				9862C8F72814DCE6009E08FE /* ProfileHeaderView.swift */,
+				9862C8F42814DBC9009E08FE /* ProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +164,7 @@
 				9862C8F52814DBC9009E08FE /* ProfileViewController.swift in Sources */,
 				9862C8F32814DBAC009E08FE /* FeedViewController.swift in Sources */,
 				9862C8F12814DB92009E08FE /* InfoViewController.swift in Sources */,
+				9862C8F82814DCE6009E08FE /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
