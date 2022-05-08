@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    fileprivate var profileHeaderView = ProfileHeaderView()
+    fileprivate var profilePostHeaderView = ProfilePostHeaderView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,13 +18,14 @@ class ProfileViewController: UIViewController {
     }
     
     fileprivate func layout() {
-        [profileHeaderView].forEach { view.addSubview($0) }
+        [profilePostHeaderView].forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
-            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
-            profileHeaderView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            profilePostHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profilePostHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profilePostHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profilePostHeaderView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
     }
+    
 }

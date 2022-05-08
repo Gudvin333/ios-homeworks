@@ -8,13 +8,52 @@
 import UIKit
 
 class ProfilePostHeaderView: UITableView {
+    
+    fileprivate var profilePost = PostPreview.makeModel()
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override init(frame: CGRect, style: UITableView.Style) {
+        super.init(frame: .zero, style: .grouped)
+        self.backgroundColor = .white
+        self.separatorInset = .zero
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.dataSource = self
+        self.delegate = self
+        self.register(PostPreviewViewCell.self, forCellReuseIdentifier: PostPreviewViewCell.identifier)
     }
-    */
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
+}
+
+extension ProfilePostHeaderView: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostPreviewViewCell.identifier, for: indexPath) as! PostPreviewViewCell
+        cell.setupCell(profilePost[indexPath.row])
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return profilePost.count
+    }
+    
+}
+
+extension ProfilePostHeaderView: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let profileHeaderView = ProfileHeaderView()
+        return profileHeaderView
+    }
 }
