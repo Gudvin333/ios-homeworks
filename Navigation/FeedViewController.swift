@@ -35,7 +35,7 @@ class FeedViewController: UIViewController {
     
     fileprivate lazy var firstFeedButton: UIButton = {
         let firstFeedButton = UIButton()
-        firstFeedButton.backgroundColor = .systemBlue
+        firstFeedButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel.png")!)
         firstFeedButton.layer.cornerRadius = 4
         firstFeedButton.layer.shadowOffset = CGSize(width: 4, height: 4)
         firstFeedButton.layer.shadowRadius = 4
@@ -49,7 +49,7 @@ class FeedViewController: UIViewController {
     
     fileprivate lazy var secondFeedButton: UIButton = {
         let secondFeedButton = UIButton()
-        secondFeedButton.backgroundColor = .systemBlue
+        secondFeedButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel.png")!)
         secondFeedButton.layer.cornerRadius = 4
         secondFeedButton.layer.shadowOffset = CGSize(width: 4, height: 4)
         secondFeedButton.layer.shadowRadius = 4

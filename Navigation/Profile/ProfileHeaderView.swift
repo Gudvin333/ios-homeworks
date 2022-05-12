@@ -23,7 +23,7 @@ class ProfileHeaderView: UIView {
     fileprivate let profileName: UILabel = {
         let profileName = UILabel()
         profileName.text = "Бильбо Бэгинс"
-        profileName.backgroundColor = .lightGray
+        profileName.backgroundColor = .systemGray5
         profileName.font = UIFont.boldSystemFont(ofSize: 18)
         profileName.textColor = .black
         profileName.translatesAutoresizingMaskIntoConstraints = false
@@ -32,7 +32,7 @@ class ProfileHeaderView: UIView {
     fileprivate let profileStatus: UILabel = {
         let profileStatus = UILabel(frame: CGRect(x: 125, y: 68, width: 300, height: 30))
         profileStatus.text = "Отправился в путешествие"
-        profileStatus.backgroundColor = .lightGray
+        profileStatus.backgroundColor = .systemGray5
         profileStatus.font = UIFont.systemFont(ofSize: 14)
         profileStatus.textColor = .gray
         profileStatus.translatesAutoresizingMaskIntoConstraints = false
@@ -57,29 +57,29 @@ class ProfileHeaderView: UIView {
     }
     
     fileprivate func layout() {
-        [profileImage, profileName, profileStatus, profileButton].forEach { self.addSubview($0) }
+        [profileImage, profileName, profileButton, profileStatus].forEach { self.addSubview($0) }
         NSLayoutConstraint.activate([
-            profileImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            profileImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            profileImage.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            profileImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             profileImage.widthAnchor.constraint(equalToConstant: 100),
             profileImage.heightAnchor.constraint(equalToConstant: 100),
-            profileName.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            profileImage.bottomAnchor.constraint(equalTo: profileButton.topAnchor, constant: -16),
+            profileButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            profileButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            profileButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            profileName.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             profileName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
-            profileName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            profileName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            profileName.heightAnchor.constraint(equalToConstant: 50),
+            profileStatus.bottomAnchor.constraint(equalTo: profileButton.topAnchor, constant: -37),
             profileStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
-            profileStatus.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            profileButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 16),
-            profileButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            profileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            profileButton.topAnchor.constraint(equalTo: profileStatus.bottomAnchor, constant: 34),
-            profileButton.heightAnchor.constraint(equalToConstant: 50)
+            profileStatus.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .lightGray
-        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .systemGray5
         layout()
     }
     
