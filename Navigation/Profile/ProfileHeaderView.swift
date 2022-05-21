@@ -40,7 +40,7 @@ class ProfileHeaderView: UIView {
     }()
     fileprivate lazy var profileButton: UIButton = {
         let profileButton = UIButton()
-        profileButton.backgroundColor = .systemBlue
+        profileButton.backgroundColor = UIColor(patternImage: UIImage(named: "blue_pixel.png")!)
         profileButton.layer.cornerRadius = 4
         profileButton.layer.shadowOffset = CGSize(width: 4, height: 4)
         profileButton.layer.shadowRadius = 4
