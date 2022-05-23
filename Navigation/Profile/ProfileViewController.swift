@@ -11,13 +11,12 @@ class ProfileViewController: UIViewController {
     
     private let postModel: [PostPreview] = PostPreview.makeModel()
     
-    private lazy var tableView: UITableView = {
+    static var tableView: UITableView = {
         var tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         tableView.register(PostPreviewViewCell.self, forCellReuseIdentifier: PostPreviewViewCell.identifier)
+        tableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileHeaderView.identifier)
         return tableView
     }()
     
@@ -33,13 +32,14 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupLayout() {
-        view.addSubview(tableView)
-        
+        ProfileViewController.tableView.delegate = self
+        ProfileViewController.tableView.dataSource = self
+        self.view.addSubview(ProfileViewController.tableView)
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ProfileViewController.tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            ProfileViewController.tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            ProfileViewController.tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            ProfileViewController.tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
@@ -68,8 +68,7 @@ extension ProfileViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             self.navigationController?.pushViewController(PhotosViewController(), animated: true)
             self.navigationItem.backButtonTitle = "Back"
-        } else { return
-        }
+        } else { return }
     }
     
 }
