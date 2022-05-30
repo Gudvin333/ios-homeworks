@@ -13,6 +13,9 @@ class PhotosViewController: UIViewController {
     
     private let photosModel: [Photos] = Photos.makeModel()
     
+    fileprivate lazy var imagePosition = imageView.layer.position
+    fileprivate lazy var imageBounds = imageView.layer.bounds
+    
     private lazy var layout: UICollectionViewFlowLayout = {
         var layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -21,16 +24,69 @@ class PhotosViewController: UIViewController {
         return layout
     }()
     
+    fileprivate let backView: UIView = {
+        let backView = UIView()
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        backView.backgroundColor = .black
+        backView.isUserInteractionEnabled = false
+        backView.alpha = 0.0
+        return backView
+    }()
     
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .systemBackground
+        imageView.layer.cornerRadius = 55
+        imageView.layer.borderWidth = 3
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.isUserInteractionEnabled = true
+        imageView.alpha = 0.0
+        return imageView
+        }()
+
     private lazy var collectionView: UICollectionView = {
         var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .systemGray6
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
         return collectionView
     }()
+    
+    @objc func tapImageAction() {
+        UIImageView.animate(withDuration: 0.5, animations: {
+            self.backView.alpha = 0.8
+            self.imageView.alpha = 1
+            self.imageView.layer.cornerRadius = 0
+            self.imageView.layer.borderWidth = 0
+            self.imageView.contentMode = .scaleAspectFill
+            self.imageView.clipsToBounds = false
+            self.imageView.backgroundColor = .black
+            self.collectionView.isScrollEnabled = false
+            self.collectionView.isUserInteractionEnabled = false
+        }, completion: { _ in UIImageView.animate(withDuration: 0.3) {
+            [self] in let rightBarItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(self.tapToCloseAction))
+            navigationItem.rightBarButtonItem = rightBarItem
+            self.layout.collectionView?.layoutIfNeeded()
+        }})
+    }
+    
+    @objc private func tapToCloseAction() {
+        UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: .curveEaseInOut) {
+            self.navigationItem.rightBarButtonItem = .none
+         } completion: { _ in UIView.animate(withDuration: 0.5, delay: 0.0) {
+            self.backView.alpha = 0
+            self.imageView.alpha = 0
+            self.imageView.isUserInteractionEnabled = true
+            self.collectionView.isScrollEnabled = true
+            self.collectionView.isUserInteractionEnabled = true
+            self.layout.collectionView?.layoutIfNeeded()
+        }}
+     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,13 +103,20 @@ class PhotosViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     private func setupLayout() {
-        view.addSubview(collectionView)
-        
+        [collectionView, backView, imageView].forEach { view.addSubview($0) }
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            backView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            backView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            imageView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
         ])
     }
 }
@@ -95,5 +158,7 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.section, indexPath.item)
+        imageView.image = photosModel[indexPath.row].image
+        tapImageAction()
     }
 }

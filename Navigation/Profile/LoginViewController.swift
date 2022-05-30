@@ -9,6 +9,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    fileprivate var login: String = "Bilbo"
+    fileprivate var password: String = "Ring"
     fileprivate let notificationCenter = NotificationCenter.default
     
     fileprivate let loginScroll: UIScrollView = {
@@ -31,6 +33,15 @@ class LoginViewController: UIViewController {
         logoImage.clipsToBounds = true
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         return logoImage
+    }()
+    
+    fileprivate var warning: UILabel = {
+        let warning = UILabel()
+        warning.text = ""
+        warning.textColor = .red
+        warning.font = UIFont.systemFont(ofSize: 10)
+        warning.translatesAutoresizingMaskIntoConstraints = false
+        return warning
     }()
     
     fileprivate var loginStackView: UIStackView = {
@@ -86,10 +97,22 @@ class LoginViewController: UIViewController {
     }()
     
     @objc private func buttonPressed() {
+        warning.text = ""
+        if loginTextField.text == login && passwordTextField.text == password {
             let profileView = ProfileViewController()
             profileView.title = "Профиль"
             navigationController?.pushViewController(profileView, animated: true)
+        } else if (loginTextField.text == "" && passwordTextField.text == "") || loginTextField.text == "" || passwordTextField.text == "" {
+            loginStackView.shake()
+        } else if passwordTextField.text!.count < 3 && passwordTextField.text!.count >= 1 {
+            warning.text = "The password can't be that short"
+        } else if  (loginTextField.text != login && passwordTextField.text == password) || (loginTextField.text == login && passwordTextField.text != password) || (loginTextField.text != login && passwordTextField.text != password) {
+            let alertController = UIAlertController(title: "Incorrect username or password", message: "Try again", preferredStyle: .alert)
+            let OKAction = UIAlertAction(title: "OK", style: .default)
+            alertController.addAction(OKAction)
+            present(alertController, animated: true)
         }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,8 +158,7 @@ class LoginViewController: UIViewController {
             loginView.bottomAnchor.constraint(equalTo: loginScroll.bottomAnchor),
             loginView.widthAnchor.constraint(equalTo: loginScroll.widthAnchor)
         ])
-        
-        [logoImage, loginStackView, loginButton].forEach { loginView.addSubview($0) }
+        [logoImage, loginStackView, loginButton, warning].forEach { loginView.addSubview($0) }
         NSLayoutConstraint.activate([
             logoImage.topAnchor.constraint(equalTo: loginView.topAnchor, constant: 120),
             logoImage.centerXAnchor.constraint(equalTo: loginView.centerXAnchor),
@@ -146,13 +168,16 @@ class LoginViewController: UIViewController {
             loginStackView.leadingAnchor.constraint(equalTo: loginView.leadingAnchor, constant: 16),
             loginStackView.trailingAnchor.constraint(equalTo: loginView.trailingAnchor, constant: -16),
             loginStackView.heightAnchor.constraint(equalToConstant: 100),
-            loginButton.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: 16),
+            warning.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: 5),
+            warning.leadingAnchor.constraint(equalTo: loginView.leadingAnchor, constant: 16),
+            warning.trailingAnchor.constraint(equalTo: loginView.trailingAnchor, constant: -16),
+            warning.heightAnchor.constraint(equalToConstant: 15),
+            loginButton.topAnchor.constraint(equalTo: warning.bottomAnchor, constant: 5),
             loginButton.leadingAnchor.constraint(equalTo: loginView.leadingAnchor, constant: 16),
             loginButton.trailingAnchor.constraint(equalTo: loginView.trailingAnchor, constant: -16),
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.bottomAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 0)
         ])
-        
         [loginTextField, passwordTextField].forEach { loginStackView.addArrangedSubview($0) }
     }
 }

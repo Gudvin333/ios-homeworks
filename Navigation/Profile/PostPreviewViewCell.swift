@@ -102,7 +102,6 @@ class PostPreviewViewCell: UITableViewCell {
             postPreviewViewsLabel.topAnchor.constraint(equalTo: postPreviewDescriptionLabel.bottomAnchor, constant: 16),
             postPreviewViewsLabel.trailingAnchor.constraint(equalTo: postPreviewView.trailingAnchor, constant: -16),
             postPreviewViewsLabel.bottomAnchor.constraint(equalTo: postPreviewView.bottomAnchor, constant: -16)
-            
         ])
     }
 }

@@ -51,6 +51,20 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         profileName.translatesAutoresizingMaskIntoConstraints = false
         return profileName
     }()
+    private lazy var statusTextField: UITextField = {
+        let statusTextField = UITextField()
+        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        statusTextField.placeholder = "Установите статус.."
+        statusTextField.textColor = .black
+        statusTextField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        statusTextField.backgroundColor = .systemGray6
+        statusTextField.layer.borderWidth = 1
+        statusTextField.layer.borderColor = UIColor.black.cgColor
+        statusTextField.layer.cornerRadius = 10
+        statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 10, height: statusTextField.frame.height))
+        statusTextField.leftViewMode = .always
+        return statusTextField
+    }()
     fileprivate let profileStatus: UILabel = {
         let profileStatus = UILabel(frame: CGRect(x: 125, y: 68, width: 300, height: 30))
         profileStatus.text = "Отправился в путешествие"
@@ -68,14 +82,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         profileButton.layer.shadowRadius = 4
         profileButton.layer.shadowColor = UIColor.black.cgColor
         profileButton.layer.shadowOpacity = 0.7
-        profileButton.setTitle("Показать статус", for: .normal)
+        profileButton.setTitle("Сменить статус", for: .normal)
         profileButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         profileButton.translatesAutoresizingMaskIntoConstraints = false
         return profileButton
     }()
     
     @objc func buttonPressed() {
-        print(profileStatus.text ?? "Статус пуст")
+        if statusTextField.text?.count ?? 0 >= 1 {
+            profileStatus.text = statusTextField.text
+        } else {
+            statusTextField.shake()
+        }
     }
     private func setupGestures() {
         let tapProfileImageGesture = UITapGestureRecognizer(target: self, action: #selector(tapProfileImageAction))
@@ -126,7 +144,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 
     
     fileprivate func layout() {
-        [profileName, profileButton, profileStatus, imageView, profileImage, closeProfileImageButton].forEach { self.addSubview($0) }
+        [statusTextField, profileName, profileButton, profileStatus, imageView, profileImage, closeProfileImageButton].forEach { self.addSubview($0) }
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
@@ -138,7 +156,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             profileImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             profileImage.widthAnchor.constraint(equalToConstant: 100),
             profileImage.heightAnchor.constraint(equalToConstant: 100),
-            profileImage.bottomAnchor.constraint(equalTo: profileButton.topAnchor, constant: -16),
+            profileButton.heightAnchor.constraint(equalToConstant: 60),
             profileButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             profileButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             profileButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
@@ -146,7 +164,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             profileName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
             profileName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             profileName.heightAnchor.constraint(equalToConstant: 50),
-            profileStatus.bottomAnchor.constraint(equalTo: profileButton.topAnchor, constant: -37),
+            statusTextField.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
+            statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            statusTextField.topAnchor.constraint(equalTo: profileStatus.bottomAnchor, constant: 10),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            profileStatus.bottomAnchor.constraint(equalTo: profileButton.topAnchor, constant: -60),
             profileStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 16),
             profileStatus.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
