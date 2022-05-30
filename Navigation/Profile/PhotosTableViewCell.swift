@@ -113,11 +113,8 @@ class PhotosTableViewCell: UITableViewCell {
     private func setupLayout() {
         let firstInset: CGFloat = 12
         let secondInset: CGFloat = 12
-        
         [firstImageView, secondImageView, thirdImageView, fourthImageView].forEach { stackView.addArrangedSubview($0) }
-        
         [photosView, photosLabel, rightArrowImageView, stackView].forEach { contentView.addSubview($0) }
-        
         NSLayoutConstraint.activate([
             photosView.topAnchor.constraint(equalTo: contentView.topAnchor),
             photosView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -137,7 +134,5 @@ class PhotosTableViewCell: UITableViewCell {
             stackView.heightAnchor.constraint(equalToConstant: (UIScreen.main.bounds.width - (firstInset * 2 + secondInset * 3)) / 4),
             stackView.bottomAnchor.constraint(equalTo: photosView.bottomAnchor, constant: -firstInset)
         ])
-        
     }
-    
 }

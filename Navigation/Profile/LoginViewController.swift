@@ -11,7 +11,6 @@ class LoginViewController: UIViewController {
     
     fileprivate var login: String = "Bilbo"
     fileprivate var password: String = "Ring"
-    
     fileprivate let notificationCenter = NotificationCenter.default
     
     fileprivate let loginScroll: UIScrollView = {
@@ -159,7 +158,6 @@ class LoginViewController: UIViewController {
             loginView.bottomAnchor.constraint(equalTo: loginScroll.bottomAnchor),
             loginView.widthAnchor.constraint(equalTo: loginScroll.widthAnchor)
         ])
-        
         [logoImage, loginStackView, loginButton, warning].forEach { loginView.addSubview($0) }
         NSLayoutConstraint.activate([
             logoImage.topAnchor.constraint(equalTo: loginView.topAnchor, constant: 120),
@@ -180,7 +178,6 @@ class LoginViewController: UIViewController {
             loginButton.heightAnchor.constraint(equalToConstant: 50),
             loginButton.bottomAnchor.constraint(equalTo: loginView.bottomAnchor, constant: 0)
         ])
-        
         [loginTextField, passwordTextField].forEach { loginStackView.addArrangedSubview($0) }
     }
 }

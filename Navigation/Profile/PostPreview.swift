@@ -12,6 +12,7 @@ struct PostPreview {
     var image: UIImage
     var description: String?
     var likes: Int
+    var isLiked: Bool = false
     var views: Int
     
     static func makeModel() -> [PostPreview] {

@@ -81,9 +81,7 @@ class FeedViewController: UIViewController {
     
     fileprivate func layout() {
         view.addSubview(feedStackView)
-        
         [firstFeedButton, secondFeedButton].forEach { feedStackView.addArrangedSubview($0) }
-        
         NSLayoutConstraint.activate([
             feedStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             feedStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
