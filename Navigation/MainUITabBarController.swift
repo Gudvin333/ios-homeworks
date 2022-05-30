@@ -7,14 +7,10 @@
 
 import UIKit
 
-struct Post {
-    var title: String
-}
-
 class MainUITabBarController: UITabBarController {
     
     let feedVC = FeedViewController()
-    let profileVC = ProfileViewController()
+    let loginVC = LoginViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,14 +20,15 @@ class MainUITabBarController: UITabBarController {
     private func setupControllers() {
         let feedNavigationVc = UINavigationController(rootViewController: feedVC)
         tabBar.backgroundColor = .white
+        tabBar.layer.borderWidth = 0.5
+        tabBar.layer.borderColor = UIColor.lightGray.cgColor
         feedVC.tabBarItem.title = "Лента"
         feedVC.tabBarItem.image = UIImage(systemName: "book")
         feedVC.navigationItem.title = "Лента"
-        let profileNavigationVc = UINavigationController(rootViewController: profileVC)
-        profileVC.tabBarItem.title = "Профиль"
-        profileVC.tabBarItem.image = UIImage(systemName: "person")
-        profileVC.navigationItem.title = "Профиль"
+        let loginNavigationVc = UINavigationController(rootViewController: loginVC)
+        loginVC.tabBarItem.title = "Профиль"
+        loginVC.tabBarItem.image = UIImage(systemName: "person")
         
-        viewControllers = [feedNavigationVc, profileNavigationVc]
+        viewControllers = [feedNavigationVc, loginNavigationVc]
     }
 }

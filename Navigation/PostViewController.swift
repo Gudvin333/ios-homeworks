@@ -11,7 +11,7 @@ class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
+        view.backgroundColor = .systemGray5
         button()
     }
     
@@ -19,7 +19,7 @@ class PostViewController: UIViewController {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
         button.center = view.center
         button.setTitle("Перейти", for: .normal)
-        button.backgroundColor = .darkGray
+        button.backgroundColor = .systemGray4
         button.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         view.addSubview(button)
     }
